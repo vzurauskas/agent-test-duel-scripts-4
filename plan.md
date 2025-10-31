@@ -83,5 +83,5 @@ classDiagram
   - Aragorn: 20 → 18 HP, Boromir: 20 → 15 HP
 
 ## Next
-- See if it would be possible to refactor avoiding Exchange and have Fighters strike each other directly.
+- See if it would be possible to refactor avoiding Exchange and have Fighters strike each other directly. Perhaps that will make Strike more active and not just a holder of properties.
 

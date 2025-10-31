@@ -11,13 +11,14 @@
 - **Knowledge Sources:**
   - My name (field)
   - My current hit points (field)
-  - Which body part to strike on opponent (own decision)
-  - Which of my body parts to parry (own decision)
+  - Which body part to strike on opponent (I can ask my Script, or own decision for now)
+  - Which of my body parts to parry (I can ask my Script, or own decision for now)
   - Damage amount (given as parameter when taking damage)
 - **Collaborators:**
   - Strike (I create them)
   - Parry (I create them)
   - Body Part (I choose them for strike/parry)
+  - Script (I consult for decisions - future iteration)
 
 **Arena**
 - **Responsibilities:**
@@ -31,10 +32,8 @@
 
 **Strike**
 - **Responsibilities:**
-  - Target a specific body part 
-  - Land if not deflected by parry
-  - Be deflected by matching parry
-  - Deal damage to hit points when landing
+  - Tell what body part I target
+  - Tell how much damage I deal
 - **Knowledge Sources:**
   - My target body part (field)
   - Damage amount for that body part (I can ask Body Part)
@@ -43,11 +42,11 @@
 
 **Parry**
 - **Responsibilities:**
-  - Protect one body part 
-  - Deflect strikes to the protected body part 
+  - Tell what body part I protect
+  - Answer whether I block a given strike
 - **Knowledge Sources:**
-  - Which body part is protected
-  - Whether incoming strike targets that body part
+  - Which body part I protect (field)
+  - I can ask Strike what body part it targets
 - **Collaborators:**
   - Body Part (I know which one I protect)
   - Strike (I can ask what body part it targets)
@@ -59,7 +58,7 @@
   - Represent different damage 
 - **Knowledge Sources:**
   - My identity (head, torso, or legs) (field)
-  - My damage value (head: 5, torso: 3, legs: 1) (field)
+  - My damage value (field)
 - **Collaborators:**
   - (none needed - I'm self-sufficient for my responsibilities)
 
