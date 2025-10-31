@@ -65,19 +65,19 @@ classDiagram
 
 ## Tests
 
-- [ ] Fighter strikes opponent's head undefended and deals 5 damage
+- [x] Fighter strikes opponent's head undefended and deals 5 damage
   - Aragorn strikes Boromir's head while Boromir parries his own legs
   - Boromir starts with 20 HP and ends with 15 HP
-- [ ] Fighter strikes opponent's torso undefended and deals 3 damage
+- [x] Fighter strikes opponent's torso undefended and deals 3 damage
   - Aragorn strikes Boromir's torso while Boromir parries his own head
   - Boromir starts with 20 HP and ends with 17 HP
-- [ ] Fighter strikes opponent's legs undefended and deals 2 damage
+- [x] Fighter strikes opponent's legs undefended and deals 2 damage
   - Aragorn strikes Boromir's legs while Boromir parries his own torso
   - Boromir starts with 20 HP and ends with 18 HP
-- [ ] Strike is deflected when fighter parries the targeted body part
+- [x] Strike is deflected when fighter parries the targeted body part
   - Aragorn strikes Boromir's head while Boromir parries his own head
   - Both fighters end with 20 HP (no damage)
-- [ ] Both fighters strike each other successfully in simultaneous exchange
+- [x] Both fighters strike each other successfully in simultaneous exchange
   - Aragorn strikes Boromir's head (5 damage) while parrying his own torso
   - Boromir strikes Aragorn's legs (2 damage) while parrying his own legs
   - Aragorn: 20 → 18 HP, Boromir: 20 → 15 HP
