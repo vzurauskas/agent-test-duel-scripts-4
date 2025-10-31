@@ -8,7 +8,6 @@ If a strike lands on a body part that the defender parries, the attack is comple
 ### Fighter Attributes
 - **Name**
 - **Hit Points**
-- **Strength**
 - **Weapon**: Each weapon has a base-damage value and a critical-hit chance.
 - **Script**: An algorithm that determines the fighter's actions each turn, based on knowledge of themselves, their opponent, and the fight history.
 
