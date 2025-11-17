@@ -1,87 +1,74 @@
-# Implementation Plan
+# Refactoring Plan: Polymorphic Body Parts
 
-## Goals
+## Goal
+Eliminate Parry as a separate object and use polymorphic body parts (Parried/Unparried) to handle strike deflection through polymorphism.
 
-1. Two fighters enter Arena and execute simultaneous strike-and-parry exchange
-2. Strikes land and deal body-part-specific damage unless blocked by matching parry
-3. Fighters maintain hit points that decrease when struck successfully
-4. Arena orchestrates the simultaneity of each exchange
+## Current State
+- BodyPart: static constants (HEAD, TORSO, LEGS) with damage values
+- Strike: holds BodyPart reference, provides damage()
+- Parry: holds BodyPart reference, checks if it deflects Strike
+- Exchange: asks Parry if deflected, applies damage to Fighter
+- Fighter: creates Strike and Parry based on decisions
+- All 5 tests pass ✅
 
-## Scenario description
+## Target State
+- BodyPart: interface with UnparriedBodyPart and ParriedBodyPart implementations
+- Fighter: creates body part instances, provides them when asked
+- Strike: asks Fighter for body part, lands on it
+- Body parts: handle being struck polymorphically (accept or deflect)
+- No Parry object
+- No conditional "is blocked?" logic
 
-When Arena accepts two Fighters, it creates an Exchange to orchestrate their simultaneous actions. Each Fighter decides where to strike the opponent and which of their own body parts to parry. Fighter creates a Strike targeting one of the opponent's Body Parts (head, torso, or legs) and a Parry protecting one of their own Body Parts. Exchange asks each Fighter for their Strike and Parry, then resolves the exchange: it asks each Parry whether it deflects the incoming Strike by checking if the protected Body Part matches the Strike's target. When a Strike lands undeflected, Exchange asks the Strike how much damage it deals (by consulting its target Body Part's damage value) and tells the struck Fighter to take that damage to their hit points.
+## Refactoring Steps (Keep Tests Green)
 
-## Design
+### Step 1: Introduce BodyPart Interface
+- [x] Convert BodyPart from class to interface (keep name() and damageValue())
+- [x] Create BodyPartType enum (HEAD, TORSO, LEGS) to replace static constants
+- [x] Update all code to use BodyPartType instead of BodyPart constants
+- [x] Run tests - should still pass ✅
 
-### Diagram
+### Step 2: Create Unparried Body Part Implementation
+- [x] Create UnparriedBodyPart implementing BodyPart
+- [x] Add acceptStrike(Fighter owner) method to BodyPart interface
+- [x] Implement acceptStrike() in UnparriedBodyPart (applies damage to owner)
+- [x] Tests don't use this yet, so they still pass ✅
 
-```mermaid
-classDiagram
-  class Arena {
-    +accept(fighter1, fighter2)
-    +executeExchange()
-  }
-  class Fighter {
-    +name()
-    +hitPoints()
-    +decideActions()
-    +createStrike(bodyPart)
-    +createParry(bodyPart)
-    +takeDamage(amount)
-  }
-  class Exchange {
-    +resolve()
-  }
-  class Strike {
-    +target()
-    +damage()
-  }
-  class Parry {
-    +protects()
-    +deflects(strike)
-  }
-  class BodyPart {
-    +name()
-    +damageValue()
-  }
-  
-  Arena --> Fighter : accepts, orchestrates
-  Arena --> Exchange : creates
-  Exchange --> Fighter : asks for actions, applies damage
-  Exchange --> Strike : queries damage
-  Exchange --> Parry : checks deflection
-  Fighter --> Strike : creates
-  Fighter --> Parry : creates
-  Strike --> BodyPart : queries damage
-  Parry --> BodyPart : protects
-```
+### Step 3: Create Parried Body Part Implementation
+- [x] Create ParriedBodyPart implementing BodyPart
+- [x] Implement acceptStrike() in ParriedBodyPart (does nothing - deflects)
+- [x] Tests don't use this yet, so they still pass ✅
 
-### Implementation details
+### Step 4: Update Fighter to Create Body Part Instances
+- [x] Add Fighter.bodyPart(BodyPartType) method
+- [x] Update Fighter.decideActions() to create 3 body part instances (1 parried, 2 unparried)
+- [x] Keep Fighter.parry() for backward compatibility
+- [x] Run tests - should still pass ✅
 
-- Fighters start with a defined number of hit points (e.g., 20)
-- Body Part damage values: head = 5, torso = 3, legs = 2
-- Parry deflects a Strike only when protected Body Part matches Strike's target Body Part
-- Exchange resolution is atomic: both fighters' actions are collected before any damage is applied
+### Step 5: Update Strike to Land on Fighter's Body Parts
+- [x] Change Strike constructor to accept BodyPartType (not BodyPart)
+- [x] Add Strike.landOn(Fighter) method that calls fighter.bodyPart() and acceptStrike()
+- [x] Keep Strike.damage() and Strike.target() for backward compatibility
+- [x] Run tests - should still pass ✅
 
-## Tests
+### Step 6: Refactor Exchange to Use New Strike Behavior
+- [x] Change Exchange.resolve() to call strike.landOn(fighter) instead of checking parry
+- [x] Run tests - should still pass (polymorphism now does the work!) ✅ 🎉
 
-- [x] Fighter strikes opponent's head undefended and deals 5 damage
-  - Aragorn strikes Boromir's head while Boromir parries his own legs
-  - Boromir starts with 20 HP and ends with 15 HP
-- [x] Fighter strikes opponent's torso undefended and deals 3 damage
-  - Aragorn strikes Boromir's torso while Boromir parries his own head
-  - Boromir starts with 20 HP and ends with 17 HP
-- [x] Fighter strikes opponent's legs undefended and deals 2 damage
-  - Aragorn strikes Boromir's legs while Boromir parries his own torso
-  - Boromir starts with 20 HP and ends with 18 HP
-- [x] Strike is deflected when fighter parries the targeted body part
-  - Aragorn strikes Boromir's head while Boromir parries his own head
-  - Both fighters end with 20 HP (no damage)
-- [x] Both fighters strike each other successfully in simultaneous exchange
-  - Aragorn strikes Boromir's head (5 damage) while parrying his own torso
-  - Boromir strikes Aragorn's legs (2 damage) while parrying his own legs
-  - Aragorn: 20 → 18 HP, Boromir: 20 → 15 HP
+### Step 7: Remove Parry Object and Dead Code
+- [x] Delete Parry.java
+- [x] Remove Fighter.parry()
+- [x] Remove Strike.damage() and Strike.target()
+- [x] Run tests - should still pass ✅
 
-## Next
-- See if it would be possible to refactor avoiding Exchange and have Fighters strike each other directly. Perhaps that will make Strike more active and not just a holder of properties.
+## Verification ✅ COMPLETE
+After each step, run: `mvn test`
+Final check: All 5 tests pass ✅, Parry class deleted ✅, no conditional blocking logic ✅
 
+## Refactoring Complete! 🎉
+
+The polymorphic body part design is now fully implemented:
+- Parry object eliminated
+- UnparriedBodyPart and ParriedBodyPart handle blocking polymorphically
+- Exchange has no conditional "is blocked?" logic
+- All 5 tests pass
+- Code is cleaner and more object-oriented

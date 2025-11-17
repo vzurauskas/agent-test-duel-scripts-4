@@ -11,8 +11,8 @@ final class ArenaTest {
         final Fighter boromir = new Fighter("Boromir");
         final Arena arena = new Arena(aragorn, boromir);
         
-        aragorn.decideActions(BodyPart.HEAD, BodyPart.HEAD);
-        boromir.decideActions(BodyPart.HEAD, BodyPart.LEGS);
+        aragorn.decideActions(BodyPartType.HEAD, BodyPartType.HEAD);
+        boromir.decideActions(BodyPartType.HEAD, BodyPartType.LEGS);
         arena.executeExchange();
         
         assertEquals(20, aragorn.hitPoints());
@@ -25,8 +25,8 @@ final class ArenaTest {
         final Fighter boromir = new Fighter("Boromir");
         final Arena arena = new Arena(aragorn, boromir);
         
-        aragorn.decideActions(BodyPart.TORSO, BodyPart.HEAD);
-        boromir.decideActions(BodyPart.HEAD, BodyPart.HEAD);
+        aragorn.decideActions(BodyPartType.TORSO, BodyPartType.HEAD);
+        boromir.decideActions(BodyPartType.HEAD, BodyPartType.HEAD);
         arena.executeExchange();
         
         assertEquals(20, aragorn.hitPoints());
@@ -39,8 +39,8 @@ final class ArenaTest {
         final Fighter boromir = new Fighter("Boromir");
         final Arena arena = new Arena(aragorn, boromir);
         
-        aragorn.decideActions(BodyPart.LEGS, BodyPart.HEAD);
-        boromir.decideActions(BodyPart.HEAD, BodyPart.TORSO);
+        aragorn.decideActions(BodyPartType.LEGS, BodyPartType.HEAD);
+        boromir.decideActions(BodyPartType.HEAD, BodyPartType.TORSO);
         arena.executeExchange();
         
         assertEquals(20, aragorn.hitPoints());
@@ -53,8 +53,8 @@ final class ArenaTest {
         final Fighter boromir = new Fighter("Boromir");
         final Arena arena = new Arena(aragorn, boromir);
         
-        aragorn.decideActions(BodyPart.HEAD, BodyPart.HEAD);
-        boromir.decideActions(BodyPart.HEAD, BodyPart.HEAD);
+        aragorn.decideActions(BodyPartType.HEAD, BodyPartType.HEAD);
+        boromir.decideActions(BodyPartType.HEAD, BodyPartType.HEAD);
         arena.executeExchange();
         
         assertEquals(20, aragorn.hitPoints());
@@ -67,8 +67,8 @@ final class ArenaTest {
         final Fighter boromir = new Fighter("Boromir");
         final Arena arena = new Arena(aragorn, boromir);
         
-        aragorn.decideActions(BodyPart.HEAD, BodyPart.TORSO);
-        boromir.decideActions(BodyPart.LEGS, BodyPart.LEGS);
+        aragorn.decideActions(BodyPartType.HEAD, BodyPartType.TORSO);
+        boromir.decideActions(BodyPartType.LEGS, BodyPartType.LEGS);
         arena.executeExchange();
         
         assertEquals(18, aragorn.hitPoints());

@@ -5,19 +5,20 @@
   - ID self
   - Describe self
   - Decide where to strike and what to parry
+  - Prepare for turn (create parried and unparried body parts)
   - Create a strike against an opponent's body part
-  - Create a parry for own body part
+  - Provide a body part when asked (parried or unparried version)
   - Take damage to hit points
 - **Knowledge Sources:**
   - My name (field)
   - My current hit points (field)
   - Which body part to strike on opponent (I can ask my Script, or own decision for now)
   - Which of my body parts to parry (I can ask my Script, or own decision for now)
+  - My current body part states for this turn (1 parried, 2 unparried)
   - Damage amount (given as parameter when taking damage)
 - **Collaborators:**
   - Strike (I create them)
-  - Parry (I create them)
-  - Body Part (I choose them for strike/parry)
+  - Body Part (I create parried/unparried versions; I provide them when asked; they tell me to take damage)
   - Script (I consult for decisions - future iteration)
 
 **Arena**
@@ -32,48 +33,43 @@
 
 **Strike**
 - **Responsibilities:**
-  - Tell what body part I target
-  - Tell how much damage I deal
+  - Land on a target body part
 - **Knowledge Sources:**
-  - My target body part (field)
-  - Damage amount for that body part (I can ask Body Part)
+  - Which body part type I target (head, torso, or legs) (field)
+  - The actual body part to land on (I ask target Fighter)
 - **Collaborators:**
-  - Body Part (I ask for damage value)
+  - Fighter (I ask for the body part I'm targeting)
+  - Body Part (I land on it - could be parried or unparried)
 
-**Parry**
-- **Responsibilities:**
-  - Tell what body part I protect
-  - Answer whether I block a given strike
-- **Knowledge Sources:**
-  - Which body part I protect (field)
-  - I can ask Strike what body part it targets
-- **Collaborators:**
-  - Body Part (I know which one I protect)
-  - Strike (I can ask what body part it targets)
-
-**Body Part**
+**Unparried Body Part**
 - **Responsibilities:**
   - ID self (head, torso, or legs)
-  - Be a target for strikes 
-  - Represent different damage 
+  - Handle being struck (apply damage to my owner)
 - **Knowledge Sources:**
   - My identity (head, torso, or legs) (field)
-  - My damage value (field)
+  - My damage value (field: head=25, torso=15, legs=10)
+  - My owner Fighter (field)
 - **Collaborators:**
-  - (none needed - I'm self-sufficient for my responsibilities)
+  - Fighter (I tell my owner to take damage when I'm struck)
+
+**Parried Body Part**
+- **Responsibilities:**
+  - ID self (head, torso, or legs)
+  - Handle being struck (deflect - no damage)
+- **Knowledge Sources:**
+  - My identity (head, torso, or legs) (field)
+  - My owner Fighter (field) (not used, but I could describe myself as parried)
+- **Collaborators:**
+  - (none - I deflect strikes without applying damage)
 
 **Exchange**
 - **Responsibilities:**
-  - Execute both fighters' strikes and parries simultaneously
-  - Resolve which strikes land and which are blocked
-  - Apply damage from successful strikes to fighters
+  - Execute both fighters' strikes simultaneously
+  - Coordinate the landing of strikes
 - **Knowledge Sources:**
   - The two fighters (given as parameters)
-  - Each fighter's strike and parry for this exchange (I can ask Fighters)
-  - Whether a parry blocks a strike (I can ask Parry)
-  - How much damage a strike deals (I can ask Strike)
+  - Each fighter's strike for this exchange (I can ask Fighters)
 - **Collaborators:**
-  - Fighter (I ask for their actions and apply damage to them)
-  - Strike (I ask for damage amounts)
-  - Parry (I ask if they block strikes)
+  - Fighter (I ask for their strike)
+  - Strike (I tell them to land)
 
