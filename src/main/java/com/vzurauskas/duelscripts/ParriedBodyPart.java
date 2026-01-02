@@ -11,15 +11,9 @@ final class ParriedBodyPart implements BodyPart {
     public String name() {
         return this.type.partName();
     }
-    
+
     @Override
-    public int damageValue() {
-        return this.type.damageValue();
-    }
-    
-    @Override
-    public void acceptStrike(final Fighter owner) {
-        // Deflects - no damage applied
+    public void acceptStrike(final Fighter owner, final double weaponDamage) {
     }
 }
 

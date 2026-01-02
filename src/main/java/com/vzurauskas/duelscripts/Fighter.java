@@ -2,14 +2,20 @@ package com.vzurauskas.duelscripts;
 
 final class Fighter {
     private final String name;
+    private final Weapon weapon;
     private int hitPoints;
     private BodyPartType strikeTarget;
     private BodyPart head;
     private BodyPart torso;
     private BodyPart legs;
-    
+
     Fighter(final String name) {
+        this(name, new Weapon(1.0, 0.0, 1.0));
+    }
+
+    Fighter(final String name, final Weapon weapon) {
         this.name = name;
+        this.weapon = weapon;
         this.hitPoints = 20;
         this.strikeTarget = BodyPartType.HEAD;
         this.head = new UnparriedBodyPart(BodyPartType.HEAD);
@@ -56,7 +62,7 @@ final class Fighter {
     }
     
     Strike strike() {
-        return new Strike(this.strikeTarget);
+        return new Strike(this.strikeTarget, this.weapon);
     }
     
     void takeDamage(final int amount) {

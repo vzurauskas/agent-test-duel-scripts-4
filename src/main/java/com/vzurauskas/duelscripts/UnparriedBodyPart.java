@@ -11,15 +11,10 @@ final class UnparriedBodyPart implements BodyPart {
     public String name() {
         return this.type.partName();
     }
-    
+
     @Override
-    public int damageValue() {
-        return this.type.damageValue();
-    }
-    
-    @Override
-    public void acceptStrike(final Fighter owner) {
-        owner.takeDamage(this.type.damageValue());
+    public void acceptStrike(final Fighter owner, final double weaponDamage) {
+        owner.takeDamage((int) (weaponDamage * this.type.damageValue()));
     }
 }
 

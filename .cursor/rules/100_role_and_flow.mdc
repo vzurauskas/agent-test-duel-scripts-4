@@ -69,7 +69,7 @@ Always keep in mind:
 
 ```
 DESIGN PHASE: Domain → CRC Cards → plan.md
-PROGRAMMING PHASE: "go" → Red → "proceed" → Green → Refactor → mark done
+PROGRAMMING PHASE: "go" → Red → Green → Refactor → mark done
 ```
 
 Key principles:
