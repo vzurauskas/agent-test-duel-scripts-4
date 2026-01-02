@@ -6,7 +6,7 @@
   - Describe self
   - Decide where to strike and what to parry
   - Prepare for turn (create parried and unparried body parts)
-  - Create a strike against an opponent's body part
+  - Create a strike against an opponent's body part 
   - Provide a body part when asked (parried or unparried version)
   - Take damage to hit points
 - **Knowledge Sources:**
@@ -16,10 +16,12 @@
   - Which of my body parts to parry (I can ask my Script, or own decision for now)
   - My current body part states for this turn (1 parried, 2 unparried)
   - Damage amount (given as parameter when taking damage)
+  - My weapon (field) - to create Strike
 - **Collaborators:**
   - Strike (I create them)
   - Body Part (I create parried/unparried versions; I provide them when asked; they tell me to take damage)
   - Script (I consult for decisions - future iteration)
+  - Weapon 
 
 **Arena**
 - **Responsibilities:**
@@ -33,13 +35,15 @@
 
 **Strike**
 - **Responsibilities:**
-  - Land on a target body part
+  - Land on a target body part 
 - **Knowledge Sources:**
-  - Which body part type I target (head, torso, or legs) (field)
-  - The actual body part to land on (I ask target Fighter)
+  - BodyPart type (head, torso, or legs) (field) - to ask from target Fighter
+  - BodyPart (I ask target Fighter) - to land on
+  - The weapon used in this strike (field) - ask for damage
 - **Collaborators:**
   - Fighter (I ask for the body part I'm targeting)
-  - Body Part (I land on it - could be parried or unparried)
+  - Body Part 
+  - Weapon 
 
 **Unparried Body Part**
 - **Responsibilities:**
@@ -47,8 +51,9 @@
   - Handle being struck (apply damage to my owner)
 - **Knowledge Sources:**
   - My identity (head, torso, or legs) (field)
-  - My damage value (field: head=25, torso=15, legs=10)
+  - My base damage value (field)
   - My owner Fighter (field)
+  - Weapon damage (given as parameter when struck)
 - **Collaborators:**
   - Fighter (I tell my owner to take damage when I'm struck)
 
@@ -72,4 +77,16 @@
 - **Collaborators:**
   - Fighter (I ask for their strike)
   - Strike (I tell them to land)
+
+**Weapon**
+- **Responsibilities:**
+  - ID self 
+  - Provide my damage when asked (multiplier × critical multiplier if critical)
+  - Determine if a strike is critical 
+- **Knowledge Sources:**
+  - My damage multiplier (field) 
+  - My critical hit chance (field) 
+  - My critical multiplier (field) 
+- **Collaborators:**
+  - (none)
 

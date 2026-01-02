@@ -74,5 +74,7 @@ The polymorphic body part design is now fully implemented:
 - Code is cleaner and more object-oriented
 
 <!-- AI:DO-NOT-EDIT:BEGIN -->
-Next: Weapon
+# Next: 
+- Weapon
+- Scripts
 <!-- AI:DO-NOT-EDIT:END -->

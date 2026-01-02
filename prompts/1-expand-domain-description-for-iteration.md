@@ -18,6 +18,7 @@ Style guidance for thick description:
 - Make simultaneity, end conditions, and observability clear in-story rather than as bullet lists.
 - Surface 2–4 illustrative scenarios naturally within the prose (they can be short vignettes).
 - Keep the focus on behavior and outcomes; avoid APIs, classes, or method names.
+- Retain the sense of proportion of the feature size - don't go overboard for simple features. The more complicated feature - the more text.
 
 Scope and formatting rules:
 - Edit ITERATION_FILE only.

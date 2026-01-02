@@ -56,6 +56,7 @@ When a next iteration begins, I will:
 
 - An object does not control/manage any object other than itself.
 - Avoid passive responsibilities (e.g., "know something").
+- Avoid "getter" responsibilities, other than "ID self" and "describe self" (e.g. "return something" or "provide something").
 - Delegate hard work; objects are lazy.
 - Use collections to separate individual and collective behaviors.
 - Use inversion of control; anthropomorphize freely.
