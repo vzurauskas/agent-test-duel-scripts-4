@@ -4,7 +4,6 @@ final class Fighter {
     private final String name;
     private int hitPoints;
     private BodyPartType strikeTarget;
-    private BodyPartType parryTarget;
     private BodyPart head;
     private BodyPart torso;
     private BodyPart legs;
@@ -13,7 +12,6 @@ final class Fighter {
         this.name = name;
         this.hitPoints = 20;
         this.strikeTarget = BodyPartType.HEAD;
-        this.parryTarget = BodyPartType.HEAD;
         this.head = new UnparriedBodyPart(BodyPartType.HEAD);
         this.torso = new UnparriedBodyPart(BodyPartType.TORSO);
         this.legs = new UnparriedBodyPart(BodyPartType.LEGS);
@@ -32,9 +30,6 @@ final class Fighter {
         final BodyPartType parryTarget
     ) {
         this.strikeTarget = strikeTarget;
-        this.parryTarget = parryTarget;
-        
-        // Create body part instances based on parry decision
         if (parryTarget == BodyPartType.HEAD) {
             this.head = new ParriedBodyPart(BodyPartType.HEAD);
             this.torso = new UnparriedBodyPart(BodyPartType.TORSO);

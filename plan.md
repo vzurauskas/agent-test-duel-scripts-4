@@ -72,3 +72,7 @@ The polymorphic body part design is now fully implemented:
 - Exchange has no conditional "is blocked?" logic
 - All 5 tests pass
 - Code is cleaner and more object-oriented
+
+<!-- AI:DO-NOT-EDIT:BEGIN -->
+Next: Weapon
+<!-- AI:DO-NOT-EDIT:END -->
