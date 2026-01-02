@@ -1,77 +1,42 @@
-# Refactoring Plan: Polymorphic Body Parts
+# Weapons
 
-## Goal
-Eliminate Parry as a separate object and use polymorphic body parts (Parried/Unparried) to handle strike deflection through polymorphism.
+## Goals
 
-## Current State
-- BodyPart: static constants (HEAD, TORSO, LEGS) with damage values
-- Strike: holds BodyPart reference, provides damage()
-- Parry: holds BodyPart reference, checks if it deflects Strike
-- Exchange: asks Parry if deflected, applies damage to Fighter
-- Fighter: creates Strike and Parry based on decisions
-- All 5 tests pass ✅
+1. Introduce Weapon as a new object that fighters wield.
+2. Weapon calculates its damage (multiplier × critical multiplier if critical hit occurs).
+3. Strike knows its weapon and asks it for damage when landing.
+4. Unparried Body Part multiplies weapon damage by its base damage to determine final damage.
 
-## Target State
-- BodyPart: interface with UnparriedBodyPart and ParriedBodyPart implementations
-- Fighter: creates body part instances, provides them when asked
-- Strike: asks Fighter for body part, lands on it
-- Body parts: handle being struck polymorphically (accept or deflect)
-- No Parry object
-- No conditional "is blocked?" logic
+## Scenario description
 
-## Refactoring Steps (Keep Tests Green)
+A fighter wields a weapon. When the fighter creates a strike, the strike knows which weapon is used. When the strike lands on an unparried body part, the strike asks the weapon for its damage. The weapon decides if this is a critical hit (based on its critical chance) and returns its damage multiplier—or the multiplier times the critical multiplier if critical. The body part receives this weapon damage, multiplies it by its own base damage value, and tells its owner fighter to take that final damage.
 
-### Step 1: Introduce BodyPart Interface
-- [x] Convert BodyPart from class to interface (keep name() and damageValue())
-- [x] Create BodyPartType enum (HEAD, TORSO, LEGS) to replace static constants
-- [x] Update all code to use BodyPartType instead of BodyPart constants
-- [x] Run tests - should still pass ✅
+## Design
 
-### Step 2: Create Unparried Body Part Implementation
-- [x] Create UnparriedBodyPart implementing BodyPart
-- [x] Add acceptStrike(Fighter owner) method to BodyPart interface
-- [x] Implement acceptStrike() in UnparriedBodyPart (applies damage to owner)
-- [x] Tests don't use this yet, so they still pass ✅
+### Diagram
 
-### Step 3: Create Parried Body Part Implementation
-- [x] Create ParriedBodyPart implementing BodyPart
-- [x] Implement acceptStrike() in ParriedBodyPart (does nothing - deflects)
-- [x] Tests don't use this yet, so they still pass ✅
+```mermaid
+classDiagram
+  class Weapon {
+    +damage() double
+  }
+  class Strike {
+    +landOn(Fighter)
+  }
+  class UnparriedBodyPart {
+    +acceptStrike(double weaponDamage)
+  }
+  Fighter --> Strike : creates with Weapon
+  Strike --> Weapon : asks damage
+  Strike --> UnparriedBodyPart : tells to accept
+```
 
-### Step 4: Update Fighter to Create Body Part Instances
-- [x] Add Fighter.bodyPart(BodyPartType) method
-- [x] Update Fighter.decideActions() to create 3 body part instances (1 parried, 2 unparried)
-- [x] Keep Fighter.parry() for backward compatibility
-- [x] Run tests - should still pass ✅
+### Implementation details
 
-### Step 5: Update Strike to Land on Fighter's Body Parts
-- [x] Change Strike constructor to accept BodyPartType (not BodyPart)
-- [x] Add Strike.landOn(Fighter) method that calls fighter.bodyPart() and acceptStrike()
-- [x] Keep Strike.damage() and Strike.target() for backward compatibility
-- [x] Run tests - should still pass ✅
-
-### Step 6: Refactor Exchange to Use New Strike Behavior
-- [x] Change Exchange.resolve() to call strike.landOn(fighter) instead of checking parry
-- [x] Run tests - should still pass (polymorphism now does the work!) ✅ 🎉
-
-### Step 7: Remove Parry Object and Dead Code
-- [x] Delete Parry.java
-- [x] Remove Fighter.parry()
-- [x] Remove Strike.damage() and Strike.target()
-- [x] Run tests - should still pass ✅
-
-## Verification ✅ COMPLETE
-After each step, run: `mvn test`
-Final check: All 5 tests pass ✅, Parry class deleted ✅, no conditional blocking logic ✅
-
-## Refactoring Complete! 🎉
-
-The polymorphic body part design is now fully implemented:
-- Parry object eliminated
-- UnparriedBodyPart and ParriedBodyPart handle blocking polymorphically
-- Exchange has no conditional "is blocked?" logic
-- All 5 tests pass
-- Code is cleaner and more object-oriented
+- Weapon.damage() decides internally if critical (using random chance against criticalChance field) and returns multiplier × criticalMultiplier if critical, otherwise just multiplier.
+- Strike constructor accepts Weapon (passed by Fighter when creating Strike).
+- Strike.landOn(Fighter) gets BodyPart from target, gets damage from Weapon, passes weapon damage to BodyPart.acceptStrike().
+- UnparriedBodyPart.acceptStrike(weaponDamage) calculates: weaponDamage × baseDamage, tells owner to takeDamage().
 
 <!-- AI:DO-NOT-EDIT:BEGIN -->
 # Next: 

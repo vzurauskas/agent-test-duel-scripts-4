@@ -81,7 +81,7 @@
 **Weapon**
 - **Responsibilities:**
   - ID self 
-  - Provide my damage when asked (multiplier × critical multiplier if critical)
+  - Calculate damage for a strike (multiplier × critical multiplier if critical)
   - Determine if a strike is critical 
 - **Knowledge Sources:**
   - My damage multiplier (field) 
