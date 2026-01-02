@@ -3,7 +3,7 @@ You are in the DESIGN PHASE for this project. Follow the CRC design discipline i
 Inputs:
 - CRC_FILE: design/crc.md
 - VISION_FILE: VISION.md (optional)
-- ITERATION_FILES: design/*.md (optional, for context)
+- STORY_FILES: design/*.md (optional, for context)
 
 Task:
 - Read CRC_FILE carefully and evaluate each object against Object Thinking principles.

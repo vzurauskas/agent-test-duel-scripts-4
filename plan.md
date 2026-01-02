@@ -49,5 +49,7 @@ classDiagram
 
 <!-- AI:DO-NOT-EDIT:BEGIN -->
 # Next: 
-- Scripts
+- FightHistory
+- Fight until death
+- Scripts (story already done)
 <!-- AI:DO-NOT-EDIT:END -->

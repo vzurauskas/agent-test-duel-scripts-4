@@ -1,12 +1,12 @@
 You are in the DESIGN PHASE for this project. Create a concrete implementation design from the narrative thick description and CRC cards before defining unit tests.
 
 Inputs:
-- ITERATION_FILE: {path-to-iteration-domain-doc}
+- STORY_FILE: {path-to-iteration-domain-doc}
 - CRC_FILE: design/crc.md
 - PLAN_FILE: plan.md
 
 Task:
-- Read ITERATION_FILE (narrative “thick description”) and CRC_FILE to understand rules and responsibilities relevant to this iteration.
+- Read STORY_FILE (narrative “thick description”) and CRC_FILE to understand rules and responsibilities relevant to this iteration.
 - Write or update PLAN_FILE to flesh out the design sections before tests:
   - Goals: 1–4 concise, concrete outcomes for this iteration.
   - Scenario description: 2–6 sentences that narrate the intended behavior. It should be a story where actors are objects, and they collaborate with each other in order to fulfil the goals of this iteration.
