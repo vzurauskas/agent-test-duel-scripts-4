@@ -38,6 +38,15 @@ classDiagram
 - Strike.landOn(Fighter) gets BodyPart from target, gets damage from Weapon, passes weapon damage to BodyPart.acceptStrike().
 - UnparriedBodyPart.acceptStrike(weaponDamage) calculates: weaponDamage × baseDamage, tells owner to takeDamage().
 
+## Tests to Implement (TDD)
+
+- [ ] Update existing tests to use weapons with multiplier 1.0 and 0% crit chance
+  - Existing damage values (head=5, torso=3, legs=2) remain unchanged
+- [ ] weaponMultiplierAffectsDamage
+  - Fighter with 2.0 multiplier weapon strikes opponent's head (base 5), opponent loses 10 HP
+- [ ] criticalHitDealsEnhancedDamage
+  - Fighter with weapon (2.0 multiplier, 100% crit, 1.5 crit multiplier) strikes head (base 5), deals 15 damage
+
 <!-- AI:DO-NOT-EDIT:BEGIN -->
 # Next: 
 - Weapon
